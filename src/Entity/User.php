@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string|null The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
@@ -135,5 +135,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->firstName.' '.$this->lastName;
     }
 }
