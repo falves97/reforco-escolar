@@ -36,9 +36,9 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
     {
         return [
             'email' => self::faker()->text(180),
-            'firstName' => self::faker()->text(100),
-            'lastName' => self::faker()->text(255),
-            'password' => self::faker()->text(255),
+            'firstName' => self::faker()->firstName(),
+            'lastName' => self::faker()->lastName(),
+            'password' => self::faker()->text(8),
             'roles' => ['ROLE_USER'],
         ];
     }
