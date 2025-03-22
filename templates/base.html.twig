@@ -22,8 +22,11 @@
         {% block header %}
             {% include 'header.html.twig' %}
         {% endblock %}
-        {% block body %}
-        {% endblock %}
+
+        <div class="page-wrapper">
+            {% block body %}
+            {% endblock %}
+        </div>
     </div>
 {% endblock %}
 </body>
