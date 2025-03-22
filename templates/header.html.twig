@@ -17,7 +17,7 @@
 
         <!-- BEGIN NAVBAR LOGO -->
         <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
+            <a href="{{ path('app_home') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="110" height="32" viewBox="0 0 232 68"
                      class="navbar-brand-image">
                     <path
@@ -39,8 +39,7 @@
                         data-bs-toggle="dropdown"
                         aria-label="Abre menu do usuário"
                     >
-                        <span class="avatar avatar-sm"
-                              style="background-image: url({{ asset('images/avatar.png') }})"></span>
+                        <span class="avatar avatar-sm">{{ app.user.fullName|initials[:2] }}</span>
                         <span class="d-none d-xl-block ps-2">
                             <span>{{ app.user.firstName }}</span>
                         </span>
