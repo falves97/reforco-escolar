@@ -33,7 +33,7 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root', ['childrenAttributes' => ['class' => 'nav flex-column']]);
         $firstSection = $menu->addChild('First Section', ['display' => false, 'childrenAttributes' => ['class' => 'nav flex-column']]);
-        $firstSection->addChild('Profile', ['labelAttributes' => ['class' => 'dropdown-item']]);
+        $firstSection->addChild('Profile', ['route' => 'app_user_profile', 'linkAttributes' => ['class' => 'dropdown-item']]);
 
         $menu->addChild('Settings', ['labelAttributes' => ['class' => 'dropdown-item']]);
         $menu->addChild('Logout', ['route' => 'app_logout', 'linkAttributes' => ['class' => 'dropdown-item']]);

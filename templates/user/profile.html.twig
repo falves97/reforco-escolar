@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <span class="avatar avatar-xl">{{ app.user.fullName|initials[:2] }}</span>
+                </div>
+                <div class="col">
+                    <h2 class="page-title">{{ app.user.fullName }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+
+    </div>
+{% endblock %}
