@@ -4,14 +4,17 @@ namespace App\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MenuBuilder
 {
     private FactoryInterface $factory;
+    private Security $security;
 
-    public function __construct(FactoryInterface $factory)
+    public function __construct(FactoryInterface $factory, Security $security)
     {
         $this->factory = $factory;
+        $this->security = $security;
     }
 
     public function createMainMenu(array $options): ItemInterface
@@ -33,7 +36,11 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root', ['childrenAttributes' => ['class' => 'nav flex-column']]);
         $firstSection = $menu->addChild('First Section', ['display' => false, 'childrenAttributes' => ['class' => 'nav flex-column']]);
-        $firstSection->addChild('Profile', ['route' => 'app_user_profile', 'linkAttributes' => ['class' => 'dropdown-item']]);
+        $firstSection->addChild('Profile', [
+            'route' => 'app_user_profile',
+            'routeParameters' => ['username' => $this->security->getUser()->getUsername()],
+            'linkAttributes' => ['class' => 'dropdown-item'],
+        ]);
 
         $menu->addChild('Settings', ['labelAttributes' => ['class' => 'dropdown-item']]);
         $menu->addChild('Logout', ['route' => 'app_logout', 'linkAttributes' => ['class' => 'dropdown-item']]);
