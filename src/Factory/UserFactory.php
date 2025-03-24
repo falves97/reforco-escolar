@@ -13,8 +13,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
@@ -29,8 +27,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function defaults(): array|callable
     {
@@ -38,6 +34,7 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
             'email' => self::faker()->text(180),
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
+            'username' => self::faker()->userName(),
             'password' => self::faker()->text(8),
             'roles' => ['ROLE_USER'],
         ];
