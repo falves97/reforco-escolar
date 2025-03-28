@@ -19,6 +19,8 @@
 <body>
 {% block content %}
     <div class="page">
+        {% include 'toasts.html.twig' %}
+
         {% block header %}
             {% include 'header.html.twig' %}
         {% endblock %}
