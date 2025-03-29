@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Configurações{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h2 class="page-title">Configurações</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container">
+            <div class="card">
+                {{ form_start(settingsForm, { attr: stimulus_controller('user-settings').toArray() }) }}
+                <div class="card-body">
+                    <h2>Minha Conta</h2>
+
+                    {{ form_errors(settingsForm) }}
+
+                    <h3 class="card-title">Imagem de Perfil</h3>
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="avatar avatar-xl">{{ app.user.fullName|initials[:2] }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn">
+                                Mudar avatar
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-ghost-danger">Deletar avatar</button>
+                        </div>
+                    </div>
+
+                    <h3 class="cart-title mt-3">Informações do Perfil</h3>
+
+                    <div class="row row-gap-3">
+                        <div class="row row-gap-3">
+                            {{ form_row(settingsForm.firstName, {
+                                row_attr: { class: 'col-12 col-lg-6' },
+                            }) }}
+                            {{ form_row(settingsForm.lastName, {
+                                row_attr: { class: 'col-12 col-lg-6' },
+                            }) }}
+                        </div>
+
+                        <div class="row row-gap-3">
+                            <div class="col-12 col-lg-6">
+                                {{ form_label(settingsForm.username) }}
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">{{ ux_icon('tabler:at', {'class': 'icon'}) }}</span>
+                                    {{ form_widget(settingsForm.username, { attr: { class: 'form-control' }}) }}
+                                </div>
+                                {{ form_help(settingsForm.username) }}
+                                {{ form_errors(settingsForm.username) }}
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                {{ form_label(settingsForm.email) }}
+                                <div class="input-icon">
+                                    <span
+                                        class="input-icon-addon">{{ ux_icon('tabler:mail', {'class': 'icon'}) }}</span>
+                                    {{ form_widget(settingsForm.email, {attr: {class: 'form-control'}}) }}
+                                </div>
+                                {{ form_help(settingsForm.email) }}
+                                {{ form_errors(settingsForm.email) }}
+                            </div>
+                        </div>
+
+                        <h3 class="cart-title m-0">Segurança</h3>
+
+                        {% set passwordFields = {currentPassword: settingsForm.currentPassword}|merge(settingsForm.plainPassword.children) %}
+                        {% for field in passwordFields %}
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    {{ form_label(field) }}
+                                    <div
+                                        class="input-group input-group-flat" {{ stimulus_controller('toggle_password') }}>
+                                        {{ form_widget(field, {attr: stimulus_target('toggle_password', 'password').toArray()}) }}
+                                        <span
+                                            class="input-group-text p-0{{ field.vars.valid ? '' : ' border-danger' }}">
+                                            <button
+                                                type="button"
+                                                class="link-secondary bg-transparent border-0"
+                                                title="Mostrar senha"
+                                                data-bs-toggle="tooltip"
+                                            {{ stimulus_action('toggle_password', 'toggle', 'click') }}
+                                            >
+                                                {{ ux_icon('tabler:eye', {class: 'icon'}) }}
+                                            </button>
+                                        </span>
+                                    </div>
+                                    {{ form_help(field) }}
+                                    {{ form_errors(field) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-list">
+                        <a href="{{ path('app_user_settings') }}" class="btn">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+                {{ form_rest(settingsForm) }}
+                {{ form_end(settingsForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

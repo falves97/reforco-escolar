@@ -42,7 +42,7 @@ class MenuBuilder
             'linkAttributes' => ['class' => 'dropdown-item'],
         ]);
 
-        $menu->addChild('Settings', ['labelAttributes' => ['class' => 'dropdown-item']]);
+        $menu->addChild('Settings', ['route' => 'app_user_settings', 'linkAttributes' => ['class' => 'dropdown-item']]);
         $menu->addChild('Logout', ['route' => 'app_logout', 'linkAttributes' => ['class' => 'dropdown-item']]);
 
         return $menu;
