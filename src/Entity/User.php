@@ -60,6 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private ?string $plainPassword = null;
 
+    #[ORM\OneToOne(targetEntity: AvatarFile::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ?AvatarFile $avatar = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -181,5 +184,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getAvatar(): ?AvatarFile
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?AvatarFile $avatar): void
+    {
+        $this->avatar = $avatar;
     }
 }

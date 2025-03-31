@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.assets_dir: '%kernel.project_dir%/assets'
+    app.avatars_dir: '%app.assets_dir%/images/avatars'
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +31,8 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
             - { name: knp_menu.menu_builder, method: createUserMenu, alias: userMenu }
+    
+    App\Services\AvatarService:
+        arguments:
+            $assetsDir: '%app.assets_dir%'
+            $avatarsDir: '%app.avatars_dir%'

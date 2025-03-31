@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Services\AvatarService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -16,8 +18,14 @@ use Symfony\Component\Validator\Constraints\When;
 
 class UserSettingsType extends AbstractType
 {
+    public function __construct(private AvatarService $avatarService)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $avatars = $this->avatarService->getAllAvatarsImages();
+
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'Primeiro nome',
@@ -52,7 +60,12 @@ class UserSettingsType extends AbstractType
                     new When("this.getParent().get('currentPassword').getData()", [new NotBlank()]),
                 ],
             ])
-        ;
+            ->add('defaultAvatar', ChoiceType::class, [
+                'choices' => array_combine($avatars, $avatars),
+                'mapped' => false,
+                'expanded' => true,
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
