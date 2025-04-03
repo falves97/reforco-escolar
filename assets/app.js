@@ -9,4 +9,3 @@ import '@tabler/core/dist/css/tabler.min.css'
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
-import './toasts.js';
