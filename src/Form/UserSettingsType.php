@@ -64,7 +64,7 @@ class UserSettingsType extends AbstractType
                 'choices' => array_combine($avatars, $avatars),
                 'mapped' => false,
                 'expanded' => true,
-                'required' => false,
+                'placeholder' => false,
             ]);
     }
 
@@ -72,6 +72,7 @@ class UserSettingsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'avatar_selected' => false,
         ]);
     }
 }

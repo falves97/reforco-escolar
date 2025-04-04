@@ -19,10 +19,14 @@ export default class extends Controller {
     if (this.userAvatarUrlValue) {
       this.avatarInitialsTarget.innerHTML = '';
       this.userAvatarTarget.style.backgroundImage = `url(${this.userAvatarUrlValue})`;
-    } else {
-      this.avatarInitialsTarget.innerHTML = this.userInitialsValue;
-      this.userAvatarTarget.style.backgroundImage = '';
-      this.userAvatarTarget.style.backgroundImageUrl = '';
     }
+  }
+
+  deleteAvatar() {
+    this.userAvatarUrlValue = '';
+    this.inputAvatarTargets.forEach(input => input.checked = false);
+    this.avatarInitialsTarget.innerHTML = this.userInitialsValue;
+    this.userAvatarTarget.style.backgroundImage = '';
+    this.userAvatarTarget.style.backgroundImageUrl = '';
   }
 }

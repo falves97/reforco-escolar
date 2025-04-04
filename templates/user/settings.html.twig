@@ -71,22 +71,18 @@
                                                                 type="radio"
                                                                 value="{{ field_value(option) }}"
                                                                 class="form-imagecheck-input"
+                                                                {% if app.user.avatar %}
+                                                                    {{ app.user.avatar.originalName in field_value(option) ? 'checked' }}
+                                                                {% endif %}
                                                                 {{ stimulus_target('user-settings', 'inputAvatar') }}
                                                                 {{ stimulus_action('user-settings', 'setAvatarImageUrl', 'change', { imageUrl: field_value(option) ? asset(field_value(option)) : ''}) }}
                                                             />
                                                             <span class="form-imagecheck-figure">
-                                                                {% if field_value(option) %}
-                                                                    <img
-                                                                        src="{{ asset(field_value(option)) }}"
-                                                                        alt=""
-                                                                        class="form-imagecheck-image"
-                                                                    />
-                                                                {% else %}
-                                                                    <div
-                                                                        class="form-imagechecker-image bg-secondary-lt">
-                                                                        {{ ux_icon('tabler:cancel', { class: 'form-imagecheck-image h-100 w-100' }) }}
-                                                                    </div>
-                                                                {% endif %}
+                                                                <img
+                                                                    src="{{ asset(field_value(option)) }}"
+                                                                    alt=""
+                                                                    class="form-imagecheck-image"
+                                                                />
                                                             </span>
                                                         </label>
                                                     </div>
@@ -96,6 +92,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-ghost-danger" {{ stimulus_action('user-settings', 'deleteAvatar') }}> Delete avatar</button>
                         </div>
                     </div>
 
