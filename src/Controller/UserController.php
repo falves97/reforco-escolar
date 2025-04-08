@@ -39,14 +39,15 @@ final class UserController extends AbstractController
             $settingsForm->handleRequest($request);
             if ($settingsForm->isSubmitted() && $settingsForm->isValid()) {
                 $avatarPath = $settingsForm->get('defaultAvatar')->getData();
+                $deleteAvatar = boolval($settingsForm->get('deleteAvatar')->getData());
 
                 if ($avatarPath && $avatarService->exists($avatarPath)) {
                     $avatarPath = $avatarService->makeAbsolute($avatarPath);
 
-                    $avatar = new AvatarFile();
-                    $avatar->setFile(new ReplacingFile($avatarPath));
-                    $user->setAvatar($avatar);
-                } else {
+                    $deleteAvatarOption = new AvatarFile();
+                    $deleteAvatarOption->setFile(new ReplacingFile($avatarPath));
+                    $user->setAvatar($deleteAvatarOption);
+                } elseif ($deleteAvatar) {
                     $user->setAvatar(null);
                 }
 

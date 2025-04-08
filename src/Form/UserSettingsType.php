@@ -7,6 +7,7 @@ use App\Services\AvatarService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,6 +66,14 @@ class UserSettingsType extends AbstractType
                 'mapped' => false,
                 'expanded' => true,
                 'placeholder' => false,
+            ])
+            ->add('avatar', AvatarFileType::class, [
+                'required' => false,
+                'label' => false,
+            ])
+            ->add('deleteAvatar', HiddenType::class, [
+                'mapped' => false,
+                'required' => false,
             ]);
     }
 
@@ -72,7 +81,6 @@ class UserSettingsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'avatar_selected' => false,
         ]);
     }
 }
