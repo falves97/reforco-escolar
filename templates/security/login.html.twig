@@ -57,27 +57,28 @@
                                 </span>
                                 </label>
                                 <div
-                                    class="input-group input-group-flat toggle-password-container"
+                                    class="input-group input-group-flat"
                                     {{ stimulus_controller('toggle_password') }}
                                 >
-                                    <input type="password"
-                                           name="_password"
-                                           id="password"
-                                           class="form-control"
-                                           placeholder="Sua senha"
-                                           autocomplete="current-password"
+                                    <input
+                                        type="password"
+                                        name="_password"
+                                        id="password"
+                                        class="form-control"
+                                        placeholder="Sua senha"
+                                        autocomplete="current-password"
                                         {{ stimulus_target('toggle_password', 'password') }}
                                     >
                                     <span class="input-group-text p-0">
-                                    <button
-                                        type="button"
-                                        class="link-secondary bg-transparent border-0"
-                                        title="Mostrar senha"
-                                        data-bs-toggle="tooltip"
-                                        {{ stimulus_action('toggle_password', 'toggle', 'click') }}
-                                    >
-                                        {{ ux_icon('tabler:eye', {width:'24', height: '24'}) }}
-                                    </button>
+                                        <button
+                                            type="button"
+                                            class="link-secondary bg-transparent border-0"
+                                            title="Mostrar senha"
+                                            data-bs-toggle="tooltip"
+                                            {{ stimulus_action('toggle_password', 'toggle', 'click') }}
+                                        >
+                                            {{ ux_icon('tabler:eye', {class: 'icon'}) }}
+                                        </button>
                                 </span>
                                 </div>
                             </div>

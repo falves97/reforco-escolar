@@ -39,7 +39,14 @@
                         data-bs-toggle="dropdown"
                         aria-label="Abre menu do usuário"
                     >
-                        <span class="avatar avatar-sm">{{ app.user.fullName|initials[:2] }}</span>
+                        <span
+                            class="avatar avatar-sm"
+                            {% if app.user.avatar %}
+                                style="background-image: url('{{ vich_uploader_asset(app.user.avatar) }}')"
+                            {% endif %}
+                        >
+                            {{ not app.user.avatar ? app.user.fullName|initials[:2] : '' }}
+                        </span>
                         <span class="d-none d-xl-block ps-2">
                             <span>{{ app.user.firstName }}</span>
                         </span>
