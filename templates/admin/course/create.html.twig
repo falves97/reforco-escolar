@@ -1,0 +1,22 @@
+{% extends'admin/course/index.html.twig' %}
+
+{% block dashboard_header_actions %}
+    <a href="{{ path('app_admin_course') }}" class="btn">
+        {{ ux_icon('tabler:chevron-left', { class: 'icon'}) }}
+        Listagem
+    </a>
+{% endblock %}
+
+{% block dashboard_menu %}{% endblock %}
+
+{% block dashboard_content %}
+    <div class="col-12">
+        <div class="card-body">
+            {{ form(form) }}
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+
+{% endblock %}

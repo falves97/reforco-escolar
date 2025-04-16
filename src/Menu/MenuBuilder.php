@@ -36,6 +36,7 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root', ['childrenAttributes' => ['class' => 'nav flex-column']]);
         $firstSection = $menu->addChild('First Section', ['display' => false, 'childrenAttributes' => ['class' => 'nav flex-column']]);
+        $firstSection->addChild('Dashboard', ['route' => 'app_admin_dashboard', 'linkAttributes' => ['class' => 'dropdown-item']]);
         $firstSection->addChild('Profile', [
             'route' => 'app_user_profile',
             'routeParameters' => ['username' => $this->security->getUser()->getUsername()],
@@ -44,6 +45,29 @@ class MenuBuilder
 
         $menu->addChild('Settings', ['route' => 'app_user_settings', 'linkAttributes' => ['class' => 'dropdown-item']]);
         $menu->addChild('Logout', ['route' => 'app_logout', 'linkAttributes' => ['class' => 'dropdown-item']]);
+
+        return $menu;
+    }
+
+    public function createDashboardMenu(array $options): ItemInterface
+    {
+        $itemClasses = 'list-group-item list-group-item-action p-0';
+        $itemContentClasses = 'list-group-item list-group-item-action border-0';
+
+        $menu = $this->factory->createItem('root', ['childrenAttributes' => ['class' => 'list-unstyled list-group']]);
+        $menu->addChild('Dashboard', [
+            'route' => 'app_admin_dashboard',
+            'attributes' => ['class' => $itemClasses],
+            'linkAttributes' => ['class' => $itemContentClasses],
+            'labelAttributes' => ['class' => $itemContentClasses],
+        ]);
+        $menu->addChild('Disciplinas', [
+            'route' => 'app_admin_course',
+            'attributes' => ['class' => $itemClasses],
+            'data-turbo-action' => 'replace',
+            'linkAttributes' => ['class' => $itemContentClasses],
+            'labelAttributes' => ['class' => $itemContentClasses],
+        ]);
 
         return $menu;
     }

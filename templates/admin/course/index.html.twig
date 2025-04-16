@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }} | Disciplinas{% endblock %}
+
+{% block dashboard_title %}Disciplinas{% endblock %}
+
+{% block dashboard_header_actions %}
+    <a
+        href="{{ path('app_admin_course_create') }}"
+        class="btn btn-primary"
+        data-turbo-frame="modal"
+    >
+        {{ ux_icon('tabler:plus', { class: 'icon' }) }}Adicionar
+    </a>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="col-12 col-md-9">
+    </div>
+{% endblock %}

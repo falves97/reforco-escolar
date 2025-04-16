@@ -38,4 +38,11 @@ return [
         'version' => '1.1.1',
         'type' => 'css',
     ],
+    'trix' => [
+        'version' => '2.1.13',
+    ],
+    'trix/dist/trix.min.css' => [
+        'version' => '2.1.13',
+        'type' => 'css',
+    ],
 ];
