@@ -23,8 +23,8 @@ class Course implements Publishable
     #[ORM\Column]
     private ?int $grade = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $year = null;
+    #[ORM\Column]
+    private ?int $year = null;
 
     #[ORM\Column]
     private ?bool $published = null;
@@ -70,12 +70,12 @@ class Course implements Publishable
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): static
+    public function setYear(int $year): static
     {
         $this->year = $year;
 

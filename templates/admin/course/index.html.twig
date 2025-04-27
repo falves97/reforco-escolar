@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }} | Disciplinas{% endblock %}
 
-{% block dashboard_title %}Disciplinas{% endblock %}
+{% block dashboard_title %}{{ title }}{% endblock %}
 
 {% block dashboard_header_actions %}
     <a
@@ -15,6 +15,114 @@
 {% endblock %}
 
 {% block dashboard_content %}
-    <div class="col-12 col-md-9">
+    <div
+        class="modal fade"
+        id="delete-modal"
+        tabindex="-1"
+        aria-labelledby="delete-modal-title"
+        aria-hidden="true"
+        {{ stimulus_controller('delete-entity-modal', {url: url('app_admin_course_delete', {id: '{id}'})}) }}
+    >
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                <div class="modal-status bg-danger"></div>
+                <div class="modal-body text-center py-4">
+                    {{ ux_icon('tabler:alert-triangle', { class: 'icon mb-2 text-danger icon-lg'}) }}
+                    <h3 id="delete-modal-title">Quer mesmo remover isto?</h3>
+                    <div class="text-secondary">
+                        Você tem certeza que quer remover permanentemente essa entidade?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn w-100" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col">
+                                <form action="" method="post">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger w-100"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Remover
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-9 p-3">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-vcenter table-mobile-md card-table">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Grau/Ano</th>
+                        <th>Publicada</th>
+                        <th class="w-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.description|raw }}</td>
+                            <td>{{ course.grade }}&#186;/{{ course.year }}</td>
+                            <td><span class="status {{ course.published ? 'status-blue' }}">Publicada</span></td>
+                            <td>
+                                <div class="btn-list flex-nowrap">
+                                    <a
+                                        href="{{ path('app_admin_course_update', {id: course.id}) }}"
+                                        class="btn btn-ghost-primary btn-icon"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-title="Editar"
+                                    >
+                                        {{ ux_icon('tabler:edit', {class: 'icon'}) }}
+                                    </a>
+                                    <a
+                                        href="{{ path('app_admin_course_show', {id: course.id}) }}"
+                                        class="btn btn-ghost-primary btn-icon"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-title="Visualizar"
+                                    >
+                                        {{ ux_icon('tabler:eye', { class: 'icon'}) }}
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="btn btn-ghost-danger btn-icon"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-title="Remover"
+                                        {{ stimulus_controller('delete-entity-button', {entityId: course.id}) }}
+                                        {{ stimulus_action('delete-entity-button', 'showModal', 'click') }}
+                                        data-delete-entity-button-delete-entity-modal-outlet="#delete-modal"
+                                    >
+                                        {{ ux_icon('tabler:trash', { class: 'icon'}) }}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer d-flex align-items-center">
+                <p class="m-0 text-secondary">
+                    {{ courses.currentPageOffsetStart }} a {{ courses.currentPageOffsetEnd }} de {{ courses.nbResults }}
+                </p>
+
+                {{ pagerfanta(courses, { css_container_class: 'pagination m-0 ms-auto', prev_message:  ux_icon('tabler:chevron-left'), next_message:  ux_icon('tabler:chevron-right')}) }}
+            </div>
+        </div>
     </div>
 {% endblock %}

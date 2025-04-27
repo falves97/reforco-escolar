@@ -1,0 +1,43 @@
+{% extends'admin/course/index.html.twig' %}
+
+{% block dashboard_header_actions %}
+    <a href="{{ path('app_admin_course') }}" class="btn">
+        {{ ux_icon('tabler:chevron-left', { class: 'icon'}) }}
+        Listagem
+    </a>
+{% endblock %}
+
+{% block dashboard_menu %}{% endblock %}
+
+{% block dashboard_content %}
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <h3 class="datagrid-title">Publicada</h3>
+                <div class="datagrid-content">
+                    <span class="status {{ course.published ? 'status-blue' }}">Publicada</span>
+                </div>
+            </div>
+
+            <div class="datagrid-item">
+                <h3 class="datagrid-title">Nome</h3>
+                <div class="datagrid-content">{{ course.name }}</div>
+            </div>
+
+            <div class="datagrid-item">
+                <h3 class="datagrid-title">Descrição</h3>
+                <div class="datagrid-content">{{ course.description|raw }}</div>
+            </div>
+
+            <div class="datagrid-item">
+                <h3 class="datagrid-title">Grau</h3>
+                <div class="datagrid-content">{{ course.grade }}&#186;</div>
+            </div>
+
+            <div class="datagrid-item">
+                <h3 class="datagrid-title">Ano</h3>
+                <div class="datagrid-content">{{ course.year }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
