@@ -32,63 +32,26 @@ export default class extends Controller {
   }
 
   _OnAttachmentAdd(event) {
-    var HOST = this.uploadUrlValue
+    if (event.attachment.file) {
+      const attachment = event.attachment;
+      const xhr = new XMLHttpRequest()
 
-    addEventListener("trix-attachment-add", function (event) {
-      if (event.attachment.file) {
-        uploadFileAttachment(event.attachment)
-      }
-    })
+      xhr.open("POST", this.uploadUrlValue, true)
 
-    function uploadFileAttachment(attachment) {
-      uploadFile(attachment.file, setProgress, setAttributes)
-
-      function setProgress(progress) {
-        attachment.setUploadProgress(progress)
+      xhr.upload.onprogress = function (event) {
+        attachment.setUploadProgress(event.loaded / event.total * 100);
       }
 
-      function setAttributes(attributes) {
-        attachment.setAttributes(attributes)
-      }
-    }
-
-    function uploadFile(file, progressCallback, successCallback) {
-      var key = createStorageKey(file)
-      var formData = createFormData(key, file)
-      var xhr = new XMLHttpRequest()
-
-      xhr.open("POST", HOST, true)
-
-      xhr.upload.addEventListener("progress", function (event) {
-        var progress = event.loaded / event.total * 100
-        progressCallback(progress)
-      })
-
-      xhr.addEventListener("load", function (event) {
-        if (xhr.status == 204) {
-          var attributes = {
-            url: HOST + key, href: HOST + key + "?content-disposition=attachment"
-          }
-          successCallback(attributes)
+      xhr.onload = function (event) {
+        if (xhr.status === 201) {
+          const response = JSON.parse(xhr.response);
+          attachment.setAttributes({url: response.url, href: response.url});
         }
-      })
+      };
 
-      xhr.send(formData)
-    }
-
-    function createStorageKey(file) {
-      var date = new Date()
-      var day = date.toISOString().slice(0, 10)
-      var name = date.getTime() + "-" + file.name
-      return ["tmp", day, name].join("/")
-    }
-
-    function createFormData(key, file) {
-      var data = new FormData()
-      data.append("key", key)
-      data.append("Content-Type", file.type)
-      data.append("file", file)
-      return data
+      const formData = new FormData();
+      formData.append('file', attachment.file);
+      xhr.send(formData);
     }
   }
 }

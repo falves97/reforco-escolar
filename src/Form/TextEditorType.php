@@ -19,6 +19,7 @@ class TextEditorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'sanitize_html' => true,
             'upload_url' => '/trix/upload',
         ]);
 
